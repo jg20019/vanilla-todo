@@ -1,8 +1,11 @@
+import Todo from './Todo.js'; 
+import TodoItem from './TodoItem.js'; 
 import TodoItemInput from './TodoItemInput.js'; 
 
 export default function TodoList(el) {
     let state = {
         items: [], 
+        lastKey: 0, 
     }; 
 
     el.innerHTML = `
@@ -15,9 +18,12 @@ export default function TodoList(el) {
 
     el.addEventListener('addItem', e => {
         let items = state.items.slice(); 
-        items.push(e.detail.label); 
-        update({items});
+        let todo = Todo(state.lastKey, e.detail.label); 
+        items.push(todo); 
+        console.log(items); 
+        update({items, lastKey: state.lastKey + 1});
     }); 
+
 
     update(); 
 
@@ -26,9 +32,9 @@ export default function TodoList(el) {
         
         itemsEl.innerHTML = ''; 
        
-        state.items.forEach(item => {
-            let todoItem = document.createElement('div'); 
-            todoItem.innerText = item; 
+        state.items.forEach(todo => {
+            let todoItem = TodoItem(document.createElement('div')); 
+            todoItem.TodoItem.update({todo}); 
             itemsEl.appendChild(todoItem); 
         }); 
     }
