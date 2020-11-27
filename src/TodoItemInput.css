@@ -1,0 +1,15 @@
+.todo-item-input {
+    display: flex; 
+} 
+
+.todo-item-input input {
+    flex: 1;
+    border: none; 
+    border-bottom: 1px solid black; 
+} 
+
+.todo-item-input button {
+    border: none; 
+    background: transparent;  
+    padding: 5px; 
+}  
