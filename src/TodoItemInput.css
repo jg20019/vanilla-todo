@@ -1,5 +1,6 @@
 .todo-item-input {
     display: flex; 
+    justify-content: flex-end; 
 } 
 
 .todo-item-input input {
@@ -12,4 +13,7 @@
     border: none; 
     background: transparent;  
     padding: 5px; 
+    padding-bottom: 0; 
+    cursor: pointer; 
+    font-size: 18px;
 }  

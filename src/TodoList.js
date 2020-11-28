@@ -1,6 +1,7 @@
 import Todo from './Todo.js'; 
 import TodoItem from './TodoItem.js'; 
 import TodoItemInput from './TodoItemInput.js'; 
+import './TodoList.css'; 
 
 export default function TodoList(el) {
     let state = {
