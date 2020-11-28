@@ -21,10 +21,17 @@ export default function TodoList(el) {
         let items = state.items.slice(); 
         let todo = Todo(state.lastKey, e.detail.label); 
         items.push(todo); 
-        console.log(items); 
         update({items, lastKey: state.lastKey + 1});
     }); 
 
+    el.addEventListener('DeleteTodo', e => {
+        let items = state.items.filter(todo => {
+            console.log(e.detail.key); 
+            return (todo.key !== e.detail.key); 
+        }); 
+
+        update({items}) 
+    }); 
 
     update(); 
 

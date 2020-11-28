@@ -13,16 +13,27 @@ export default function TodoItem(el) {
 
     let checkboxEl = el.querySelector('input'); 
     let todoEl = el.querySelector('.todo-content'); 
+    let deleteButton = el.querySelector('.delete-button'); 
   
     checkboxEl.addEventListener('click', () => {
-        if (state.todo) {
-            el.dispatchEvent(
-                new CustomEvent('ToggleTodo', {
-                    bubbles: true, 
-                    detail: state.todo.key
-                })
-            ); 
-        }
+        if (!state.todo) return;  
+        el.dispatchEvent(
+            new CustomEvent('ToggleTodo', {
+                bubbles: true, 
+                detail: state.todo.key
+            })
+        ); 
+    }); 
+
+    deleteButton.addEventListener('click', () => {
+        if (!state.todo) return; 
+        let key = state.todo.key; 
+        el.dispatchEvent(
+            new CustomEvent('DeleteTodo', {
+                bubbles: true, 
+                detail: { key }, 
+            })
+        ); 
     }); 
 
     function update(next) {
