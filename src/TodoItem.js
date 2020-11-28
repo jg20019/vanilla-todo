@@ -3,11 +3,14 @@ export default function TodoItem(el) {
 
     el.innerHTML = `
         <input type="checkbox"> 
-        <span class="todo-item"></span> 
+        <span class="todo-content"></span> 
+        <button class="delete-button"> delete </button> 
     `; 
 
+    el.classList.add('todo-item'); 
+
     let checkboxEl = el.querySelector('input'); 
-    let todoEl = el.querySelector('.todo-item'); 
+    let todoEl = el.querySelector('.todo-content'); 
   
     checkboxEl.addEventListener('click', () => {
         if (state.todo) {
