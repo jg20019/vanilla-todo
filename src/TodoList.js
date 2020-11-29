@@ -1,4 +1,4 @@
-import EditableHeader from './EditableHeader'; 
+import ProjectHeader from './ProjectHeader'; 
 import Todo from './Todo.js'; 
 import TodoItem from './TodoItem.js'; 
 import TodoItemInput from './TodoItemInput.js'; 
@@ -11,6 +11,7 @@ export default function TodoList(el) {
         items: [], 
         lastKey: 0, 
         hidden: false, 
+        projectKey: null, 
     }; 
 
     el.innerHTML = `
@@ -21,7 +22,7 @@ export default function TodoList(el) {
         </div> 
     `; 
 
-    let projectEl = EditableHeader(el.querySelector('.header')); 
+    let projectEl = ProjectHeader(el.querySelector('.header')); 
     let itemsEl = el.querySelector('.items'); 
     TodoItemInput(el.querySelector('.todo-item-input')); 
 
@@ -57,7 +58,7 @@ export default function TodoList(el) {
         Object.assign(state, next); 
       
         let visibilityButtonText = state.hidden ? 'show' : 'hide'; 
-        projectEl.EditableHeader.update({text: state.name, visibilityButtonText})
+        projectEl.ProjectHeader.update({text: state.name, visibilityButtonText})
 
         itemsEl.innerHTML = ''; 
        
@@ -73,5 +74,8 @@ export default function TodoList(el) {
             el.querySelector('.todo-list-container').style.display = 'block'; 
         } 
     }
+    
+    el.TodoList = { update }; 
+    return el; 
 }
 

@@ -1,24 +1,24 @@
-import './EditableHeader.css'; 
+import './ProjectHeader.css'; 
 
-export default function EditableHeader(el) {
+export default function ProjectHeader(el) {
     let state = {
         text: 'undefined', 
         editable: false,
         visibilityButtonText: 'show/hide', 
     };  
     
-    el.classList.add('editable-header'); 
+    el.classList.add('project-header'); 
 
     el.innerHTML = `
         <header> 
-            <div class="header-content"></div> 
+            <h2 class="header-content"></h2> 
             <button class="visibility-button"></button> 
         </header> 
         <input type="text" value=""> 
     `; 
 
 
-    let content = el.querySelector('div'); 
+    let content = el.querySelector('h2'); 
     let input = el.querySelector('input'); 
     let visibilityButton = el.querySelector('button'); 
 
@@ -75,6 +75,6 @@ export default function EditableHeader(el) {
     } 
 
     
-    el.EditableHeader = { update }; 
+    el.ProjectHeader = { update }; 
     return el; 
 } 

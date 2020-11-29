@@ -1,16 +1,16 @@
-.editable-header {
+.project-header {
     position: relative; 
     height: 100%; 
     padding: 5px; 
 } 
 
-.editable-header header {
+.project-header header {
     display: flex; 
     justify-content: space-between; 
     padding-bottom: 10px; 
 } 
 
-.editable-header input {
+.project-header input {
     position: absolute; 
     top: 0; 
     left: 0; 
