@@ -1,0 +1,23 @@
+.editable-header {
+    position: relative; 
+    height: 25px; 
+    padding: 5px; 
+} 
+
+.editable-header div {
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    top: 0;
+    left: 5px; 
+    font-weight: bold; 
+} 
+
+.editable-header input {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    height: 100%; 
+    width: 100%;  
+    display: none; 
+} 

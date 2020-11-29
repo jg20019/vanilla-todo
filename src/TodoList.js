@@ -1,7 +1,9 @@
+import EditableHeader from './EditableHeader'; 
 import Todo from './Todo.js'; 
 import TodoItem from './TodoItem.js'; 
 import TodoItemInput from './TodoItemInput.js'; 
 import './TodoList.css'; 
+
 
 export default function TodoList(el) {
     let state = {
@@ -11,12 +13,12 @@ export default function TodoList(el) {
     }; 
 
     el.innerHTML = `
-        <h2></h2> 
+        <div class="header"></div> 
         <div class="items"></div> 
         <div class="todo-item-input"></div> 
     `; 
 
-    let projectEl = el.querySelector('h2'); 
+    let projectEl = EditableHeader(el.querySelector('.header')); 
     let itemsEl = el.querySelector('.items'); 
     TodoItemInput(el.querySelector('.todo-item-input')); 
 
@@ -41,7 +43,7 @@ export default function TodoList(el) {
     function update(next){
         Object.assign(state, next); 
        
-        projectEl.innerText = state.name; 
+        projectEl.EditableHeader.update({text: state.name}); 
 
         itemsEl.innerHTML = ''; 
        
