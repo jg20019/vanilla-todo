@@ -4,7 +4,7 @@ export default function EditableHeader(el) {
     let state = {
         text: 'undefined', 
         editable: false,
-        visibilityButton: 'show/hide', 
+        visibilityButtonText: 'show/hide', 
     };  
     
     el.classList.add('editable-header'); 
@@ -42,7 +42,7 @@ export default function EditableHeader(el) {
         Object.assign(state, next);
 
         content.innerText = state.text; 
-        visibilityButton.innerText = state.visibilityButton; 
+        visibilityButton.innerText = state.visibilityButtonText; 
 
         if (state.editable) {
             input.value = state.text; 

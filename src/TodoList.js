@@ -55,8 +55,9 @@ export default function TodoList(el) {
 
     function update(next){
         Object.assign(state, next); 
-       
-        projectEl.EditableHeader.update({text: state.name}); 
+      
+        let visibilityButtonText = state.hidden ? 'show' : 'hide'; 
+        projectEl.EditableHeader.update({text: state.name, visibilityButtonText})
 
         itemsEl.innerHTML = ''; 
        
