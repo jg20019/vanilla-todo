@@ -37,7 +37,7 @@ export default function TodoList(el) {
         update({name}); 
     }); 
 
-    el.addEventListener('ToggleList', e => {
+    el.addEventListener('ToggleListVisibility', e => {
         update({hidden: !state.hidden});  
     }); 
 

@@ -36,6 +36,14 @@ export default function EditableHeader(el) {
         } 
     }); 
 
+
+    visibilityButton.addEventListener('click', e => {
+        el.dispatchEvent(
+            new CustomEvent('ToggleListVisibility', {
+                bubbles: true, 
+            })
+        ); 
+    }); 
     update(); 
 
     function update(next) {
