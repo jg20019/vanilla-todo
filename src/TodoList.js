@@ -5,15 +5,18 @@ import './TodoList.css';
 
 export default function TodoList(el) {
     let state = {
+        name: 'New Project', 
         items: [], 
         lastKey: 0, 
     }; 
 
     el.innerHTML = `
+        <h2></h2> 
         <div class="items"></div> 
         <div class="todo-item-input"></div> 
     `; 
 
+    let projectEl = el.querySelector('h2'); 
     let itemsEl = el.querySelector('.items'); 
     TodoItemInput(el.querySelector('.todo-item-input')); 
 
@@ -37,7 +40,9 @@ export default function TodoList(el) {
 
     function update(next){
         Object.assign(state, next); 
-        
+       
+        projectEl.innerText = state.name; 
+
         itemsEl.innerHTML = ''; 
        
         state.items.forEach(todo => {
