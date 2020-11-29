@@ -29,6 +29,11 @@ export default function TodoList(el) {
         update({items, lastKey: state.lastKey + 1});
     }); 
 
+    el.addEventListener('ChangeName', e => {
+        let name = e.detail.name; 
+        update({name}); 
+    }); 
+
     el.addEventListener('DeleteTodo', e => {
         let items = state.items.filter(todo => {
             console.log(e.detail.key); 

@@ -48,7 +48,15 @@ export default function EditableHeader(el) {
     } 
 
     function updateHeader() {
-        update({text: input.value, editable: false}); 
+        el.dispatchEvent(
+            new CustomEvent('ChangeName', {
+                bubbles: true, 
+                detail: {name: input.value}, 
+            })
+        ); 
+
+
+        update({editable: false}); 
     } 
 
     
