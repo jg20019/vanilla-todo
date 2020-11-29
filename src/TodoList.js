@@ -10,12 +10,15 @@ export default function TodoList(el) {
         name: 'New Project', 
         items: [], 
         lastKey: 0, 
+        hidden: false, 
     }; 
 
     el.innerHTML = `
         <div class="header"></div> 
-        <div class="items"></div> 
-        <div class="todo-item-input"></div> 
+        <div class="todo-list-container"> 
+            <div class="items"></div> 
+            <div class="todo-item-input"></div> 
+        </div> 
     `; 
 
     let projectEl = EditableHeader(el.querySelector('.header')); 
@@ -34,6 +37,10 @@ export default function TodoList(el) {
         update({name}); 
     }); 
 
+    el.addEventListener('ToggleList', e => {
+        update({hidden: !state.hidden});  
+    }); 
+
     el.addEventListener('DeleteTodo', e => {
         let items = state.items.filter(todo => {
             console.log(e.detail.key); 
@@ -42,6 +49,7 @@ export default function TodoList(el) {
 
         update({items}) 
     }); 
+
 
     update(); 
 
@@ -57,6 +65,12 @@ export default function TodoList(el) {
             todoItem.TodoItem.update({todo}); 
             itemsEl.appendChild(todoItem); 
         }); 
+
+        if (state.hidden) {
+            el.querySelector('.todo-list-container').style.display = 'none'; 
+        } else {
+            el.querySelector('.todo-list-container').style.display = 'block'; 
+        } 
     }
 }
 

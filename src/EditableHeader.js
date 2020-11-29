@@ -4,18 +4,23 @@ export default function EditableHeader(el) {
     let state = {
         text: 'undefined', 
         editable: false,
+        visibilityButton: 'show/hide', 
     };  
     
     el.classList.add('editable-header'); 
 
     el.innerHTML = `
-        <div></div> 
+        <header> 
+            <div class="header-content"></div> 
+            <button class="visibility-button"></button> 
+        </header> 
         <input type="text" value=""> 
     `; 
 
 
     let content = el.querySelector('div'); 
     let input = el.querySelector('input'); 
+    let visibilityButton = el.querySelector('button'); 
 
     content.addEventListener('dblclick', e => {
         update({editable: true}); 
@@ -37,6 +42,8 @@ export default function EditableHeader(el) {
         Object.assign(state, next);
 
         content.innerText = state.text; 
+        visibilityButton.innerText = state.visibilityButton; 
+
         if (state.editable) {
             input.value = state.text; 
             input.style.display = 'block'; 
