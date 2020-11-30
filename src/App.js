@@ -20,13 +20,47 @@ export default function App(el) {
 
     addProject(); 
 
-    function addProject() {
-        let todoList = TodoList(document.createElement('div')); 
-        todoList.classList.add('todo-list'); 
-        todoList.TodoList.update({projectKey: state.lastProjectKey}); 
+    el.addEventListener('AddItemToProject', e => {
+        let projects = state.projects.map(project => {
+           if (project.projectKey === e.detail.projectKey) {
+               let newProject = Object.assign({}, project); 
+               newProject.items.push(e.detail.todo); 
+               newProject.lastKey = project.lastKey + 1; 
+               return newProject; 
+           } else {
+               return Object.create(project); 
+           } 
+        }); 
 
+        update({projects}); 
+    }); 
+
+    el.addEventListener('DeleteTodoFromProject', e => {
+        let projects = state.projects.map(project => {
+           if (project.projectKey === e.detail.projectKey) {
+               let newProject = Object.assign({}, project); 
+               newProject.items = newProject.items.filter(todo => {
+                    return (todo.key !== e.detail.todoKey); 
+               }); 
+               return newProject; 
+           } else {
+               return Object.assign({}, project); 
+           } 
+        }); 
+
+        update({projects}) 
+    }); 
+
+    function addProject() {
+        let project = {
+            name: 'New', 
+            items: [], 
+            lastKey: 0,
+            hidden: false, 
+            projectKey: state.lastProjectKey, 
+        }; 
         let projects = state.projects.slice();
-        projects.push(todoList);  
+        projects.push(project);  
 
         update({projects, lastProjectKey: state.lastProjectKey + 1}); 
     }
@@ -36,8 +70,33 @@ export default function App(el) {
 
         projectsEl.innerHTML = ''; 
 
+        console.log('In update'); 
+        console.log(state.projects); 
+        state.projects.forEach(project => {
+            let todoList = TodoList(document.createElement('div')); 
+            todoList.classList.add('todo-list'); 
+            todoList.TodoList.update(project); 
+            projectsEl.appendChild(todoList); 
+        }); 
+    } 
+
+    function save() {
+        console.log(state.lastProjectKey); 
+        localStorage.setItem('lastProjectKey', state.lastProjectKey);  
+        let projects = []; 
         state.projects.forEach(el => {
-            projectsEl.appendChild(el); 
+            projects.push(el.TodoList.state()); 
+        }); 
+        localStorage.setItem('projects', JSON.stringify(projects)); 
+    } 
+
+    function load() {
+        let projectData = localStorage.getItem('projects', JSON.parse(projects)); 
+        let projects = [];
+
+
+        update({
+            lastProjectKey: parseInt(localStorage.getItem('lastProjectKey')), 
         }); 
     } 
 } 

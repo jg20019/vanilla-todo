@@ -27,10 +27,16 @@ export default function TodoList(el) {
     TodoItemInput(el.querySelector('.todo-item-input')); 
 
     el.addEventListener('addItem', e => {
-        let items = state.items.slice(); 
         let todo = Todo(state.lastKey, e.detail.label); 
-        items.push(todo); 
-        update({items, lastKey: state.lastKey + 1});
+        let projectKey = state.projectKey; 
+        console.log(state); 
+        let lastKey = state.lastKey; 
+        el.dispatchEvent(
+            new CustomEvent('AddItemToProject', {
+                bubbles: true, 
+                detail: {todo, lastKey, projectKey}, 
+            })
+        ); 
     }); 
 
     el.addEventListener('ChangeName', e => {
@@ -43,12 +49,13 @@ export default function TodoList(el) {
     }); 
 
     el.addEventListener('DeleteTodo', e => {
-        let items = state.items.filter(todo => {
-            console.log(e.detail.key); 
-            return (todo.key !== e.detail.key); 
-        }); 
-
-        update({items}) 
+        let projectKey = state.projectKey;  
+        el.dispatchEvent(
+            new CustomEvent('DeleteTodoFromProject', {
+                bubbles: true, 
+                detail: {projectKey, todoKey: e.detail.key}  
+            })
+        ); 
     }); 
 
 
@@ -74,8 +81,9 @@ export default function TodoList(el) {
             el.querySelector('.todo-list-container').style.display = 'block'; 
         } 
     }
-    
-    el.TodoList = { update }; 
+
+
+    el.TodoList = { update, state: () => state }; 
     return el; 
 }
 
