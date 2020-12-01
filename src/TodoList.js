@@ -27,16 +27,10 @@ export default function TodoList(el) {
     TodoItemInput(el.querySelector('.todo-item-input')); 
 
     el.addEventListener('addItem', e => {
-        let todo = Todo(state.lastKey, e.detail.label); 
-        let projectKey = state.projectKey; 
-        console.log(state); 
-        let lastKey = state.lastKey; 
-        el.dispatchEvent(
-            new CustomEvent('AddItemToProject', {
-                bubbles: true, 
-                detail: {todo, lastKey, projectKey}, 
-            })
-        ); 
+        dispatchEvent('AddItemToProject', {
+            lastKey: state.lastKey, 
+            todo: Todo(state.lastKey, e.detail.label), 
+        }); 
     }); 
 
     el.addEventListener('ChangeName', e => {
