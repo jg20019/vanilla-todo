@@ -49,17 +49,22 @@ export default function TodoList(el) {
     }); 
 
     el.addEventListener('DeleteTodo', e => {
-        let projectKey = state.projectKey;  
-        el.dispatchEvent(
-            new CustomEvent('DeleteTodoFromProject', {
-                bubbles: true, 
-                detail: {projectKey, todoKey: e.detail.key}  
-            })
-        ); 
+        dispatchEvent('DeleteTodoFromProject', {todoKey: e.detail.key})
     }); 
 
 
     update(); 
+
+    function dispatchEvent(eventName, detail) {
+        let projectKey = state.projectKey; 
+        let eventDetails = Object.assign({}, detail, {projectKey}); 
+        el.dispatchEvent(
+            new CustomEvent(eventName, {
+                bubbles: true, 
+                detail: eventDetails 
+            }) 
+        ); 
+    } 
 
     function update(next){
         Object.assign(state, next); 
