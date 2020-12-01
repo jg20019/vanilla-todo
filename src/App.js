@@ -21,18 +21,12 @@ export default function App(el) {
     addProject(); 
 
     el.addEventListener('AddItemToProject', e => {
-        let projects = state.projects.map(project => {
-           if (project.projectKey === e.detail.projectKey) {
-               let newProject = Object.assign({}, project); 
-               newProject.items.push(e.detail.todo); 
-               newProject.lastKey = project.lastKey + 1; 
-               return newProject; 
-           } else {
-               return Object.create(project); 
-           } 
+        updateProjectWithKey(e.detail.projectKey, project => {
+            let newProject = Object.assign({}, project); 
+            newProject.items.push(e.detail.todo); 
+            newProject.lastKey = project.lastKey + 1; 
+            return newProject; 
         }); 
-
-        update({projects}); 
     }); 
 
     el.addEventListener('DeleteTodoFromProject', e => {
