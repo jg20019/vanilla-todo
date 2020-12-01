@@ -34,8 +34,9 @@ export default function TodoList(el) {
     }); 
 
     el.addEventListener('ChangeName', e => {
-        let name = e.detail.name; 
-        update({name}); 
+        dispatchEvent('ChangeProjectName', {
+            name: e.detail.name
+        }); 
     }); 
 
     el.addEventListener('ToggleListVisibility', e => {

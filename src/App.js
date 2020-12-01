@@ -36,19 +36,13 @@ export default function App(el) {
     }); 
 
     el.addEventListener('DeleteTodoFromProject', e => {
-        let projects = state.projects.map(project => {
-           if (project.projectKey === e.detail.projectKey) {
-               let newProject = Object.assign({}, project); 
-               newProject.items = newProject.items.filter(todo => {
-                    return (todo.key !== e.detail.todoKey); 
-               }); 
-               return newProject; 
-           } else {
-               return Object.assign({}, project); 
-           } 
-        }); 
-
-        update({projects}) 
+        updateProjectWithKey(e.detail.projectKey, project => {
+            let newProject = Object.assign({}, project); 
+            newProject.items = newProject.items.filter(todo => {
+                return todo.key !== e.detail.todoKey; 
+            }); 
+            return newProject; 
+        });  
     }); 
 
     function addProject() {
@@ -78,6 +72,18 @@ export default function App(el) {
             todoList.TodoList.update(project); 
             projectsEl.appendChild(todoList); 
         }); 
+    } 
+
+    function updateProjectWithKey(projectKey, fn) {
+        let projects = state.projects.map(project => {
+           if (project.projectKey === projectKey) {
+               return fn(project); 
+           } else {
+               return Object.assign({}, project); 
+           } 
+        }); 
+
+        update({projects}) 
     } 
 
     function save() {
