@@ -39,14 +39,21 @@ export default function TodoList(el) {
         }); 
     }); 
 
-    el.addEventListener('ToggleListVisibility', e => {
-        dispatchEvent('ToggleProjectVisibility', {}); 
-    }); 
 
     el.addEventListener('DeleteTodo', e => {
         dispatchEvent('DeleteTodoFromProject', {todoKey: e.detail.key})
     }); 
 
+    el.addEventListener('ToggleListVisibility', e => {
+        dispatchEvent('ToggleProjectVisibility', {}); 
+    }); 
+
+    el.addEventListener('ToggleTodo', e => {
+        console.log(e.detail.key); 
+        dispatchEvent('ToggleProjectTodo', {
+            todoKey: e.detail.key
+        });
+    }); 
 
     update(); 
 

@@ -48,6 +48,19 @@ export default function App(el) {
         });  
     }); 
 
+    el.addEventListener('ToggleProjectTodo', e => {
+        console.log('Toggling todo'); 
+        console.log(e.detail.todoKey); 
+        updateProjectWithKey(e.detail.projectKey, project => {
+            project.items = project.items.map(todo => {
+                if (todo.key === e.detail.todoKey) {
+                    todo.done = !todo.done; 
+                } 
+                return todo; 
+            }); 
+            return project; 
+        }); 
+    }); 
     el.addEventListener('ToggleProjectVisibility', e => {
         updateProjectWithKey(e.detail.projectKey, project => {
             project.hidden = !project.hidden; 

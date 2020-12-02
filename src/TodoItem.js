@@ -17,10 +17,11 @@ export default function TodoItem(el) {
   
     checkboxEl.addEventListener('click', () => {
         if (!state.todo) return;  
+        let key = state.todo.key; 
         el.dispatchEvent(
             new CustomEvent('ToggleTodo', {
                 bubbles: true, 
-                detail: state.todo.key
+                detail: { key }, 
             })
         ); 
     }); 
@@ -43,6 +44,11 @@ export default function TodoItem(el) {
         console.log(todo); 
         if (todo) {
             checkboxEl.checked = todo.done; 
+            if (todo.done) {
+                todoEl.style.textDecoration = 'line-through'; 
+            } else {
+                todoEl.style.textDecoration = 'none'; 
+            } 
             todoEl.innerText = todo.desc; 
             el.dataset.key = todo.key; 
         } 
