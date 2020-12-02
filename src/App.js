@@ -18,25 +18,41 @@ export default function App(el) {
     let addProjectButton = el.querySelector('.add-project-button'); 
     addProjectButton.addEventListener('click', addProject);  
 
-    addProject(); 
+    if (isSavedData()) {
+        load(); 
+    } else {
+        addProject(); 
+    } 
 
     el.addEventListener('AddItemToProject', e => {
         updateProjectWithKey(e.detail.projectKey, project => {
-            let newProject = Object.assign({}, project); 
-            newProject.items.push(e.detail.todo); 
-            newProject.lastKey = project.lastKey + 1; 
-            return newProject; 
+            project.items.push(e.detail.todo); 
+            project.lastKey = project.lastKey + 1; 
+            return project; 
+        }); 
+    }); 
+
+    el.addEventListener('ChangeProjectName', e => {
+        updateProjectWithKey(e.detail.projectKey, project => {
+            project.name = e.detail.name; 
+            return project; 
         }); 
     }); 
 
     el.addEventListener('DeleteTodoFromProject', e => {
         updateProjectWithKey(e.detail.projectKey, project => {
-            let newProject = Object.assign({}, project); 
-            newProject.items = newProject.items.filter(todo => {
+            project.items = project.items.filter(todo => {
                 return todo.key !== e.detail.todoKey; 
             }); 
-            return newProject; 
+            return project; 
         });  
+    }); 
+
+    el.addEventListener('ToggleProjectVisibility', e => {
+        updateProjectWithKey(e.detail.projectKey, project => {
+            project.hidden = !project.hidden; 
+            return project;  
+        }); 
     }); 
 
     function addProject() {
@@ -58,45 +74,41 @@ export default function App(el) {
 
         projectsEl.innerHTML = ''; 
 
-        console.log('In update'); 
-        console.log(state.projects); 
         state.projects.forEach(project => {
             let todoList = TodoList(document.createElement('div')); 
             todoList.classList.add('todo-list'); 
             todoList.TodoList.update(project); 
             projectsEl.appendChild(todoList); 
         }); 
+
+        // Everytime the app state updates it saves 
+        save(); 
     } 
 
     function updateProjectWithKey(projectKey, fn) {
         let projects = state.projects.map(project => {
+           let newProject = Object.assign({}, project);  
            if (project.projectKey === projectKey) {
-               return fn(project); 
+               return fn(newProject); 
            } else {
-               return Object.assign({}, project); 
+               return newProject; 
            } 
         }); 
 
         update({projects}) 
     } 
 
-    function save() {
-        console.log(state.lastProjectKey); 
-        localStorage.setItem('lastProjectKey', state.lastProjectKey);  
-        let projects = []; 
-        state.projects.forEach(el => {
-            projects.push(el.TodoList.state()); 
-        }); 
-        localStorage.setItem('projects', JSON.stringify(projects)); 
-    } 
-
     function load() {
-        let projectData = localStorage.getItem('projects', JSON.parse(projects)); 
-        let projects = [];
-
-
-        update({
-            lastProjectKey: parseInt(localStorage.getItem('lastProjectKey')), 
-        }); 
+        let loadedState = JSON.parse(localStorage.getItem('todo-state')); 
+        update(loadedState); 
     } 
+
+    function save() {
+        localStorage.setItem('todo-state', JSON.stringify(state)); 
+    } 
+
+    function isSavedData() {
+        return Boolean(localStorage.getItem('todo-state')); 
+    } 
+
 } 

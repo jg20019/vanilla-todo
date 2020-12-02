@@ -40,7 +40,7 @@ export default function TodoList(el) {
     }); 
 
     el.addEventListener('ToggleListVisibility', e => {
-        update({hidden: !state.hidden});  
+        dispatchEvent('ToggleProjectVisibility', {}); 
     }); 
 
     el.addEventListener('DeleteTodo', e => {
