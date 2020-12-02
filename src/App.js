@@ -1,4 +1,5 @@
 import TodoList from './TodoList.js'; 
+import './App.css'; 
 
 export default function App(el) {
     let state = {
